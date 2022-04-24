@@ -27,7 +27,15 @@ function checksExistsUserAccount(request, response, next) {
 }
 
 function checksCreateTodosUserAvailability(request, response, next) {
-  // Complete aqui
+  const { user } = request;
+
+  if(user.pro) {
+    next();
+  } else if(!user.pro && user.todos.length < 10) {
+    next();
+  };
+
+  return response.status(403).json({error: "Upgrade to pro to get more todos"})
 }
 
 function checksTodoExists(request, response, next) {
